@@ -12,7 +12,9 @@ export class PokemonService {
   constructor(
     @InjectModel(Pokemon.name)
     private readonly pokemonModel: Model<Pokemon>,
-  ){}
+  ){
+    console.log(process.env.DEFAULT_LIMIT)
+  }
 
 
   async create(createPokemonDto: CreatePokemonDto) {
@@ -32,7 +34,7 @@ export class PokemonService {
     const {limit=10 ,offset=0} = paginationDto;
 
     return this.pokemonModel.find()
-    .limit(limit).skip(offset).sort({no:1}).select('-__v');
+    .limit(limit).skip(offset).sort({no:1}).select('-__');
     //return `This action returns all pokemon`;
   }
 
