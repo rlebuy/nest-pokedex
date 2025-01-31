@@ -20,6 +20,11 @@ npm i -g @nestjs/cli
 docker-compose up -d
 ```
 
+4. Recargar la base de datos
+```
+http://lobo.local:3001/api/v2/seed
+```
+
 ## Stack Usado
 * MongoDB
 * Nest
