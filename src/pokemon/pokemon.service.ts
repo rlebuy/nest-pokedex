@@ -5,15 +5,21 @@ import { isValidObjectId, Model } from 'mongoose';
 import { Pokemon } from './entities/pokemon.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PokemonService {
 
+  private defaultLimit:number;
+
   constructor(
     @InjectModel(Pokemon.name)
     private readonly pokemonModel: Model<Pokemon>,
+    private readonly configService : ConfigService
   ){
-    console.log(process.env.DEFAULT_LIMIT)
+
+    this.defaultLimit = configService.get<number>('defaultLimit') ?? 5;
+    //console.log(process.env.DEFAULT_LIMIT)
   }
 
 
@@ -31,7 +37,7 @@ export class PokemonService {
 
   findAll(paginationDto: PaginationDto) {
 
-    const {limit=10 ,offset=0} = paginationDto;
+    const {limit=this.defaultLimit ,offset=0} = paginationDto;
 
     return this.pokemonModel.find()
     .limit(limit).skip(offset).sort({no:1}).select('-__');
@@ -65,7 +71,7 @@ export class PokemonService {
 
     const pokemon = await this.findOne(term);
 
-    console.log(updatePokemonDto.name);
+    //console.log(updatePokemonDto.name);
 
     if(updatePokemonDto.name)
       updatePokemonDto.name = updatePokemonDto.name.toLowerCase();
@@ -99,7 +105,7 @@ export class PokemonService {
     if(error.code === 11000){
       throw new BadRequestException(`Pokemon ya existe en la base de datos ${JSON.stringify(error.keyValue)}`);
     }
-    console.log(error);
+    //console.log(error);
     throw new InternalServerErrorException(`Pokemon no se puede crear - Revisar logs del Servidor`);
   }
 }

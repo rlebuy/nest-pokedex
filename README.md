@@ -19,8 +19,13 @@ npm i -g @nestjs/cli
 ```
 docker-compose up -d
 ```
-
-4. Recargar la base de datos
+5. Clonar el archivo __.env.template__ y renombrar la copia __.env__
+6. Llenar las variables de entorno definidas en el ```.env```
+7. Ejecutar la aplicaion de desarollo 
+   ````
+yarn start:dev
+   ```
+8. Recargar la base de datos
 ```
 http://lobo.local:3001/api/v2/seed
 ```
