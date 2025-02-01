@@ -30,6 +30,21 @@ yarn start:dev
 http://lobo.local:3001/api/v2/seed
 ```
 
+# Production build
+1. crear archivo ````env.prod```
+2. llenar las variables de entorno para prod
+3. Crear la imagen
+```
+docker-compose -f docker-compose.prod.yaml --env-file .env.prod up --build
+```
+4. Correrla 
+```
+docker-compose -f docker-compose.prod.yaml --env-file .env.prod up
+```
+
+
+
+
 ## Stack Usado
 * MongoDB
 * Nest
